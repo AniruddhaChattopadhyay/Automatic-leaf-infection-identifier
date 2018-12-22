@@ -17,8 +17,8 @@ X = dataf.drop(['imgid','fortnum'], axis=1)
 y = X['label']
 X = X.drop('label', axis=1)
 
-print "\nTraining dataset:-\n" 
-print X
+print("\nTraining dataset:-\n")
+print(X)
 
 
 log = pd.read_csv("datasetlog/Datasetunlabelledlog.csv")
@@ -26,9 +26,10 @@ log = pd.read_csv("datasetlog/Datasetunlabelledlog.csv")
 log = log.tail(1)
 X_ul = log.drop(['imgid','fortnum'], axis=1)
 
-print "\nTest dataset:-\n"
-print X_ul
+print("\nTest dataset:-\n")
+print(X_ul)
 
+print("\n*To terminate press (q)*")
 
 #X.plot(kind='scatter',x='feature1',y='feature2')
 #plt.show()
@@ -36,23 +37,23 @@ print X_ul
 
 Sum = 0
 from sklearn.model_selection import train_test_split  
-for n in xrange(4):
+for n in range(4):
 	x_train, Xi_test, y_train, yi_test = train_test_split(X, y, test_size=0.52, random_state=60)  
-	     
+	if cv2.waitKey(1) == ord('q' or 'Q'): break     
 	svclassifier = SVC(kernel='linear')  
 	svclassifier.fit(x_train, y_train)  
 	pred = svclassifier.predict(X_ul)
 	Sum = Sum + pred
-	print pred
+	print(pred)
 
-print "\nprediction:",Sum 
+print("\nprediction: %d" %int(Sum/4))
 
 if(Sum < 2):
-	print "The leaf is sufficiently healthy!"
+	print("The leaf is sufficiently healthy!")
 else:
-	print "The leaf is infected!"
+	print("The leaf is infected!")
 
-print "\nKeypress on any image window to terminate"
+print("\nKeypress on any image window to terminate")
 
 #from sklearn.metrics import classification_report, confusion_matrix  
 
